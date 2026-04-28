@@ -71,4 +71,12 @@ public class EmployeeController {
         return Result.success();
     }
 
+    @PostMapping
+    public Result save(@RequestBody EmployeeLoginDTO employeeLoginDTO){
+        log.info("新增员工：{}",employeeLoginDTO);
+        employeeService.save(employeeLoginDTO);
+
+        return Result.success();
+    }
+
 }
