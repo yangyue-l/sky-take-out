@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
@@ -59,7 +60,7 @@ public class DishController {
      * @return
      */
     @DeleteMapping
-    public Result delte(@RequestParam List<Long> ids){
+    public Result delete(@RequestParam List<Long> ids){
         log.info("菜品的批量删除:{}",ids);
         dishService.deleteBatch(ids);
 
@@ -91,6 +92,20 @@ public class DishController {
 
 
         return Result.success();
+    }
+
+
+    /**
+     * 根据分类id查询菜品信息
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    public Result<List<Dish>> list(Long categoryId){
+        log.info("根据分类id查询所有菜品:{}",categoryId);
+        List<Dish> list = dishService.list(categoryId);
+
+        return Result.success(list);
     }
 
 
