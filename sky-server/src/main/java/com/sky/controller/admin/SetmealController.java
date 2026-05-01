@@ -1,12 +1,19 @@
 package com.sky.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sky.dto.SetmealDTO;
+import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
 
@@ -27,10 +34,32 @@ public class SetmealController {
      */
     @PostMapping
     public Result save(@RequestBody SetmealDTO setmealDTO){
-
+        log.info("新增套餐:{}",setmealDTO);
         setmealService.saveWithDish(setmealDTO);
         return Result.success();
     }
 
+
+    @GetMapping("/page")
+    public Result<PageResult> page(SetmealPageQueryDTO setmealPageQueryDTO){
+        log.info("分页查询:{}",setmealPageQueryDTO);
+        PageResult pageResult = setmealService.page(setmealPageQueryDTO);
+
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 根据id删除套餐
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    public Result delete(@RequestParam List<Long> ids){
+        log.info("根据id删除套餐:{}",ids);
+
+        setmealService.deleteBatch(ids);
+
+        return Result.success();
+    }
 
 }
