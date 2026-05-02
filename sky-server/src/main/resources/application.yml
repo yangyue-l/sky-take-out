@@ -15,6 +15,10 @@ spring:
   output:
     ansi:
       enabled: always
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+
 
 mybatis:
   #mapper配置文件
