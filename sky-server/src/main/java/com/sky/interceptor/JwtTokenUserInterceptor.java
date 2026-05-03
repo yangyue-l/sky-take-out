@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.HandlerMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.sky.constant.JwtClaimsConstant;
@@ -48,7 +48,7 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor{
             log.info("jwt校验:{}", token);
             Claims claims = JwtUtil.parseJWT(jwtProperties.getUserSecretKey(), token);
             Long userId = Long.valueOf(claims.get(JwtClaimsConstant.USER_ID).toString());
-            log.info("当前用户id：", userId);
+            log.info("当前用户id：{}", userId);
             BaseContext.setCurrentId(userId);
             //3、通过，放行
             return true;
