@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.result.Result;
+import com.sky.service.OrderService;
 import com.sky.vo.OrderSubmitVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,13 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderController {
 
     @Autowired
-    private OrderService OrderService;
+    private OrderService orderService;
 
     @PostMapping("/submit")
     public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO){
+        log.info("用户下单，参数为:{}",ordersSubmitDTO);
+        OrderSubmitVO orderSubmitVO = orderService.submitOrder(ordersSubmitDTO);
 
-
-        return Result.success();
+        return Result.success(orderSubmitVO);
 
     }
 
