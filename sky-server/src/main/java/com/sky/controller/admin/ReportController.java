@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sky.result.Result;
 import com.sky.service.ReportService;
 import com.sky.vo.TurnoverReportVO;
+import com.sky.vo.UserReportVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,4 +34,16 @@ public class ReportController {
         
         return Result.success(reportService.getTurnoverStatistics(begin, end));
     }
+
+    @GetMapping("/userStatistics")
+    public Result<UserReportVO> userStatistics(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
+                                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end){
+        log.info("用户数据统计:{},{}",begin,end);                                   
+        
+                                            
+        return Result.success(reportService.getUserStatistics(begin, end));
+    
+    }
+
+
 }
